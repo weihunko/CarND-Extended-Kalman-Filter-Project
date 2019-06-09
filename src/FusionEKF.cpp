@@ -86,13 +86,13 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       					 0, 1, 0, 0,
       					 0, 0, 1000, 0,
       					 0, 0, 0, 1000;	
-
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
       // TODO: Initialize state.
     	float px = measurement_pack.raw_measurements_(0);
     	float py = measurement_pack.raw_measurements_(1);
-
+      cout << "px init = " << px << endl;
+      cout << "py init = " << py << endl;
     	ekf_.x_(0) = px;
     	ekf_.x_(1) = py;
 
@@ -102,7 +102,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       					 0, 0, 1000, 0,
       					 0, 0, 0, 1000;	
     }
-
+    previous_timestamp_ = measurement_pack.timestamp_;
     // done initializing, no need to predict or update
     is_initialized_ = true;
     return;
